@@ -14,6 +14,7 @@ df['Men'] = Temp_dict_men['Men']
 df['Women'] = Temp_dict_women['Women']
 df['Causes'] = Temp_index
 df.set_index('Causes', inplace=True)
+df = df.sort_values('Women', ascending=False)
 #Data Plot
 plt.figure(figsize=(3, 2))
 gs = gridspec.GridSpec(len(Temp_index)+ 5, 3)
@@ -25,33 +26,11 @@ plt.axis('off')
 highest_cause_men = max(df['Men'])
 highest_cause_women = max(df['Women'])
 
-for index in range(len(Temp_index)):
+for index in range(len(df)):
     loc = gs[row+2, 0]
     ax = plt.subplot(loc)
     plt.axis('off')
-    if 'Road Rage' in Temp_index[index]:
-        req_color = 'cornflowerblue'
-    elif 'Eating' in Temp_index[index]:
-        req_color = 'orangered'
-    elif 'Texting' in Temp_index[index]:
-        req_color = 'darkturquoise'
-    elif 'Navigation' in Temp_index[index]:
-        req_color = 'slateblue'
-    elif 'Reading' in Temp_index[index]:
-        req_color = 'purple'
-    elif 'Passenger' in Temp_index[index]:
-        req_color = 'indigo'
-    elif 'Kids' in Temp_index[index]:
-        req_color = 'blue'
-    elif 'Radio' in Temp_index[index]:
-        req_color = 'crimson'
-    elif 'Weather' in Temp_index[index]:
-        req_color = 'dodgerblue'
-    elif 'Shaving' in Temp_index[index]:
-        req_color = 'navy'
-    elif 'Other' in Temp_index[index]:
-        req_color = 'limegreen'
-    ax.text(0, 0, Temp_index[index])
+    ax.text(0, 0, df.index[index])
     if index==0:
         loc = gs[row+1, 1]
         ax = plt.subplot(loc)
@@ -64,21 +43,23 @@ for index in range(len(Temp_index)):
     loc = gs[row+2, 1]
     ax = plt.subplot(loc)
     ax.set_xlim(0, 35)
-    ax.axvspan(0, df['Men'][index], alpha=0.8, color=req_color)
-    ax.invert_xaxis()
-    if df['Men'][index] == highest_cause_men:
-        ax.text(30, 0, str(df['Men'][index]) + "%", fontsize=17, color=req_color)
+    if highest_cause_men==df['Men'][index]:
+        ax.axvspan(0, df['Men'][index], alpha=0.8, color='red')
+        ax.text(30, 0, str(df['Men'][index]) + "%", fontsize=17, color='red')
     else:
+        ax.axvspan(0, df['Men'][index], alpha=0.8, color='grey')
         ax.text(30, 0, str(df['Men'][index]) + "%")
+    ax.invert_xaxis()
 
     plt.axis('off')
     loc = gs[row+2, 2]
     ax = plt.subplot(loc)
     ax.set_xlim(0, 35)
-    ax.axvspan(0, df['Women'][index], alpha=0.8, color=req_color)
-    if df['Women'][index] == highest_cause_women:
-        ax.text(30, 0, str(df['Women'][index]) + "%", fontsize=17, color=req_color)
+    if highest_cause_women == df['Women'][index]:
+        ax.axvspan(0, df['Women'][index], alpha=0.8, color='blue')
+        ax.text(30, 0, str(df['Women'][index]) + "%", fontsize=17, color='blue')
     else:
+        ax.axvspan(0, df['Women'][index], alpha=0.8, color='grey')
         ax.text(30, 0, str(df['Women'][index]) + "%")
 
     plt.axis('off')

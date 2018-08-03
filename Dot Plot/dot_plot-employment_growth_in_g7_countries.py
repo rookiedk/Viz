@@ -8,7 +8,7 @@ import seaborn as sns
 sns.set_style("white")
 plt.xkcd();
 #Load data
-data_source = 'C:\Users\danandak\Desktop\\temp\Dot Plot\Employment Growth in G-7 Countries.xlsx'
+data_source = 'Path to Employment Growth in G-7 Countries.xlsx'
 df = pd.read_excel(data_source)
 df['Employment Share'] = df['Employment Share'] * 100
 df['Net Employment Growth Share'] = df['Net Employment Growth Share'] * 100
